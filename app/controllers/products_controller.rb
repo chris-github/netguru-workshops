@@ -1,5 +1,7 @@
 class ProductsController < ApplicationController
-
+  before_action :authenticate_user!, except: [:index, :show, :destroy ]
+  before_action :sign_in, only: [:update, :create]
+  before_action :require_permission, only: [:edit, :update, :destroy]
   expose(:category)
   expose(:products)
   expose(:product)
@@ -20,6 +22,7 @@ class ProductsController < ApplicationController
 
   def create
     self.product = Product.new(product_params)
+    product.user = current_user
 
     if product.save
       category.products << product
@@ -44,7 +47,18 @@ class ProductsController < ApplicationController
   end
 
   private
-    def product_params
-      params.require(:product).permit(:title, :description, :price, :category_id)
+  def product_params
+    params.require(:product).permit(:title, :description, :price, :category_id)
+  end
+
+  def sign_in
+    redirect_to new_user_session_path unless user_signed_in?
+  end
+
+  def require_permission
+    if current_user != Product.find(params[:id]).user
+      redirect_to category_product_path
+      flash.now[:error] = "You have not enough permisions to edit this product."
     end
+  end
 end

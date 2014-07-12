@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-
+  before_action :sign_in, only: [:update, :create]
   expose(:review)
   expose(:product)
 
@@ -8,6 +8,7 @@ class ReviewsController < ApplicationController
 
   def create
     self.review = Review.new(review_params)
+    review.user = current_user
 
     if review.save
       product.reviews << review
@@ -23,7 +24,10 @@ class ReviewsController < ApplicationController
   end
 
   private
-    def review_params
-      params.require(:review).permit(:content, :rating)
-    end
+  def review_params
+    params.require(:review).permit(:content, :rating)
+  end
+  def sign_in
+    redirect_to new_user_session_path unless user_signed_in?
+  end
 end

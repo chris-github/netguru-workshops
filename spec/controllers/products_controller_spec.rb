@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe ProductsController do
-
-
   let(:category) { create(:category) }
 
   let(:valid_attributes) { { "title" => "MyString", "category_id" => category.id } }

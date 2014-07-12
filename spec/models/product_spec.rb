@@ -7,7 +7,16 @@ describe Product do
     it { should validate_presence_of :price }
 
     describe '#price' do
-      let(:product) { build(:product, price: 1.234) }
+      let(:product) { build(:product, price: 1.12) }
+
+      it 'with two decimals is valid' do
+        expect(product).to be_valid
+      end
+    end
+
+
+    describe '#price' do
+      let(:product) { build(:product, price: 1.123) }
 
       it 'is limited to two decimal places' do
         expect(product).to_not be_valid
