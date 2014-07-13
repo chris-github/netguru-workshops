@@ -1,6 +1,6 @@
 %h1 Listing products
 
-%table
+%table.table.table-hover
   %tr
     %th Title
     %th Description
@@ -14,8 +14,6 @@
       %td= product.title
       %td= product.description
       %td= product.price
-      %td= link_to 'Show', category_product_path(product.category, product)
-      %td= link_to 'Edit', edit_category_product_path(product.category, product)
-      %td= link_to 'Destroy', category_product_path(product.category, product), method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
+      %td= button_to 'Show', category_product_path(product.category, product), method: :get, :class => "btn btn-sm btn-primary pull-right"
+      %td= button_to 'Edit', edit_category_product_path(product.category, product), method: :get, :class => "btn btn-sm btn-warning pull-right"
+      %td= button_to 'Destroy', category_product_path(product.category, product), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-sm btn-danger pull-right"

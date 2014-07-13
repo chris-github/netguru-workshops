@@ -7,8 +7,32 @@
     = csrf_meta_tags
     = stylesheet_link_tag 'application', media: 'all'
     = javascript_include_tag 'application'
+    %title Netguru workshops
+
 
   %body
-    %p.notice= notice
-    %p.alert= alert
+
+  .container
+    / Static navbar
+    .navbar.navbar-default{role: "navigation"}
+      .container-fluid
+        .navbar-header
+          %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", type: "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to 'Netguru Workshops', root_url, class: "navbar-brand"
+        .navbar-collapse.collapse
+          %ul.nav.navbar-nav
+          %ul.nav.navbar-nav.navbar-right
+            %li.active
+              = link_to 'Home', root_url
+            %li
+              -#%a{href: "../about-me/"} About Me
+            %li
+              - if user_signed_in?
+                = link_to 'Sign out', destroy_user_session_path, method: :delete
+              - else
+                = link_to 'Sign in', new_user_session_path
     = yield

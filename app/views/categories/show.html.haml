@@ -1,12 +1,20 @@
 %p#notice= notice
 
-%p
-  %b Name:
+%p.h3
+  %b Category:
   = category.name
 
-%p
+%table.table.table-hover
+  %tr
+    %th Name
+    %th Description
+    %th Price
+
   - category.products.each do |product|
-    = product.title
+    %tr
+      %td= product.title
+      %td= product.description
+      %td= product.price
 
 %p
   %h3 New product

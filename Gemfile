@@ -18,6 +18,8 @@ gem 'uglifier'
 
 gem 'therubyracer', platforms: :ruby
 
+gem 'rails_12factor', group: :production
+
 group :development do
   gem 'spring'
 end
